@@ -18,8 +18,8 @@ function createCommandChoices() {
 }
 
 // Simple test command
-const TEST_COMMAND = {
-  name: 'test',
+const TIRAGE_COMMAND = {
+  name: 'tirage',
   description: 'Basic command',
   type: 1,
 };
@@ -40,6 +40,6 @@ const CHALLENGE_COMMAND = {
   type: 1,
 };
 
-const ALL_COMMANDS = [TEST_COMMAND, CHALLENGE_COMMAND];
+const ALL_COMMANDS = [TIRAGE_COMMAND, CHALLENGE_COMMAND];
 
 InstallGlobalCommands(process.env.APP_ID, ALL_COMMANDS);
