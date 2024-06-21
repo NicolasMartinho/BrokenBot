@@ -2,13 +2,16 @@ import "dotenv/config";
 import express from "express";
 import { InteractionType, InteractionResponseType } from "discord-interactions";
 import { VerifyDiscordRequest } from "./utils.js";
+import { connect } from "./modules/mongoDb.js"
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const initiateDb = () => {
+  connect()
+}
+
 app.use(express.json({ verify: VerifyDiscordRequest(process.env.PUBLIC_KEY) }));
-
-
 
 app.post("/interactions", async function (req, res) {
   const { type, id, data } = req.body;
@@ -56,5 +59,6 @@ app.post("/interactions", async function (req, res) {
 });
 
 app.listen(PORT, () => {
+  initiateDb()
   console.log("Listening on port", PORT);
 });
