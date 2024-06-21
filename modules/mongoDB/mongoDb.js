@@ -1,27 +1,30 @@
-import { MongoClient } from "mongodb"
+import mongoDB from "mongodb"
 //connection parameters
 const user = "api_user";
 const pass = "nxW1gXVwD1nmVukn";
 const url = `mongodb+srv://${user}:${pass}@cluster0.dtzu7gn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster`;
 
-const client = new MongoClient(url);
+const client = new mongoDB.MongoClient(url);
 
 const connect = async () => {
   console.log("Trying to connect : " + url);
-  const connection = await client.connect();
+  await client.connect();
   console.log(`Connection successful`);
-  console.log(connection)
 };
 
-const getAllDocument = (database, collection) => {
+const getAllDocument = async (database, collection) => {
   const db = client.db(database)
-  //console.log(db)
-  const data = db.collection(collection).find()
-  console.log(data)
-  return data
+  const coll = db.collection(collection) 
+  const cursor = coll.find()
+  const result = []
+  for await (const doc of cursor) {
+    result.push(doc)
+  }
+  return result
 };
 
 export default {
   connect,
   getAllDocument,
+  client,
 }

@@ -7,9 +7,9 @@ import mongoDB from "./mongoDb.js"
 const APImongoDB = express();
 const PORT = 3000;
 
-APImongoDB.listen(PORT, () => {
+APImongoDB.listen(PORT, async () => {
     mongoDB.connect()
-    console.log("Listening on port", PORT);
+
   });
 
 
@@ -18,6 +18,6 @@ APImongoDB.get("/documents/db/:db/collection/:collection", async (req, res) => {
     const collection = req.params.collection
     const db = req.params.db
     const data = await mongoDB.getAllDocument(db, collection)
-    return res.send(data.data)
+    return res.send(data)
   })
 
