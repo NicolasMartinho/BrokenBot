@@ -8,7 +8,7 @@ const USER_COLLECTION = "user";
 
 export default (router, client) => {
   router.post("/interactions", async function (req, res) {
-    const { type, id, data } = req.body;
+    const { type, member, data } = req.body;
 
     if (type === InteractionType.PING) {
       return res.send({ type: InteractionResponseType.PONG });
@@ -59,7 +59,7 @@ export default (router, client) => {
           await upsertOneCardToUser(
             client,
             { database: DATABASE, collection: USER_COLLECTION },
-            { user: { id }, card: data }
+            { user: member.user, card: data }
           );
 
           return res.send({
